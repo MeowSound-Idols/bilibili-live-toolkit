@@ -21,6 +21,14 @@
                         )
                     "
                 ></v-checkbox>
+                <v-checkbox
+                    v-model="hideOtherRoomMedal"
+                    :label="
+                        $vuetify.lang.t(
+                            '$vuetify.danmakuList.settings.hideOtherRoomMedal'
+                        )
+                    "
+                ></v-checkbox>
             </v-form>
         </v-card-text>
     </v-card>
@@ -44,6 +52,14 @@ export default Vue.extend({
             },
             set(v: boolean) {
                 this.$store.commit("updateHideUserMedal", v);
+            }
+        },
+        hideOtherRoomMedal: {
+            get() {
+                return this.$store.state.danmaku.hideOtherRoomMedal;
+            },
+            set(v: boolean) {
+                this.$store.commit("updateHideOtherRoomMedal", v);
             }
         }
     }

@@ -15,7 +15,8 @@ export default {
         settings: {
             settingsCardTitle: "弹幕列表设置",
             filterSilverCoinGifts: "不显示银瓜子礼物",
-            hideUserMedal: "不显示粉丝牌"
+            hideUserMedal: "不显示粉丝牌",
+            hideOtherRoomMedal: "仅显示本房间粉丝牌"
         }
     },
     giftStatistics: {
@@ -23,5 +24,5 @@ export default {
         giftName: "礼物名",
         amount: "数量",
         resetBtnText: "重置数据"
-    },
+    }
 };

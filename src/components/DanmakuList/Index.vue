@@ -21,9 +21,7 @@
                         <div class="message">
                             <div
                                 class="medal"
-                                v-if="
-                                    item.data.medalName && !updateHideUserMedal
-                                "
+                                v-if="item.data.medalName && !hideUserMedal"
                             >
                                 <div class="name">
                                     {{ item.data.medalName }}
@@ -180,11 +178,17 @@ export default Vue.extend({
         settingsVisible: false
     }),
     computed: {
+        roomId() {
+            return this.$store.state.global.connectedRoomId;
+        },
         filterSilverCoinGifts() {
             return this.$store.state.danmaku.filterSilverCoinGifts;
         },
-        updateHideUserMedal() {
+        hideUserMedal() {
             return this.$store.state.danmaku.hideUserMedal;
+        },
+        hideOtherRoomMedal() {
+            return this.$store.state.danmaku.hideOtherRoomMedal;
         }
     },
     mounted() {
@@ -196,14 +200,20 @@ export default Vue.extend({
         handleNewDanmaku(data: any) {
             const cmd = data.value.cmd;
             if (cmd.startsWith("DANMU_MSG")) {
+                const medalName = data.value.info[3][1];
+                const medalLevel = data.value.info[3][0];
+                const medalRoomId = data.value.info[3][3];
+                const showMedalInfo =
+                    !this.hideOtherRoomMedal ||
+                    (this.hideOtherRoomMedal && medalRoomId === this.roomId);
                 this.appendDanmaku({
                     type: "message",
                     data: {
                         user: data.value.info[2][1],
                         content: data.value.info[1],
-                        medalName: data.value.info[3][1],
-                        medalLevel: data.value.info[3][0],
-                        medalRoomId: data.value.info[3][3]
+                        ...(showMedalInfo
+                            ? { medalName, medalLevel, medalRoomId }
+                            : {})
                     },
                     timestamp: new Date()
                 });
