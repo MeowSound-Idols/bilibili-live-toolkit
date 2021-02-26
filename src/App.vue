@@ -9,11 +9,11 @@
             {{ $store.state.error.message }}
             <v-btn dark text @click="$store.commit('hideError')">×</v-btn>
         </v-snackbar>
-        <v-content>
+        <v-main>
             <keep-alive>
                 <router-view />
             </keep-alive>
-        </v-content>
+        </v-main>
     </v-app>
 </template>
 

@@ -8,7 +8,7 @@ export default class Danmaku extends VuexModule {
         true
     );
 
-    hideUserMedal = Storage.getSetting("danmaku.hideUserMedal", false);
+    hideUserMedal = Storage.getSetting<boolean>("danmaku.hideUserMedal", false);
 
     @Mutation
     updateFilterSilverCoinGifts(value: boolean) {

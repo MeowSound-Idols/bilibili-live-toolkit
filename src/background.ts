@@ -21,7 +21,7 @@ protocol.registerSchemesAsPrivileged([
 
 app.disableHardwareAcceleration();
 
-function createWindow() {
+async function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({
         width: 1280,
@@ -41,25 +41,22 @@ function createWindow() {
         // Load the index.html when not in development
         win.loadURL("app://./index.html");
     }
-    win.webContents.session.cookies.set(
-        {
+    try {
+        await win.webContents.session.cookies.set({
             name: "kg_mid",
             value: "d8b438d814a0f4742242b4d723ff0aa7",
             url: "https://www.kugou.com/yy/index.php"
-        },
-        error => {
-            if (error) {
-                log.error(error);
-            }
-        }
-    );
+        });
+    } catch (e) {
+        log.error(e);
+    }
 
     win.on("closed", () => {
         win = null;
     });
 }
 
-function createNewWindow() {
+async function createNewWindow() {
     // Create the browser window.
     let win: BrowserWindow | null = new BrowserWindow({
         width: 1280,
@@ -69,18 +66,16 @@ function createNewWindow() {
             webSecurity: false
         }
     });
-    win.webContents.session.cookies.set(
-        {
+
+    try {
+        await win.webContents.session.cookies.set({
             name: "kg_mid",
             value: "d8b438d814a0f4742242b4d723ff0aa7",
             url: "https://www.kugou.com/yy/index.php"
-        },
-        error => {
-            if (error) {
-                log.error(error);
-            }
-        }
-    );
+        });
+    } catch (e) {
+        log.error(e);
+    }
 
     if (process.env.WEBPACK_DEV_SERVER_URL) {
         // Load the url of the dev server if in development mode
